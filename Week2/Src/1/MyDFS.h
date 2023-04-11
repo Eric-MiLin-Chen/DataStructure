@@ -1,6 +1,7 @@
 #ifndef __MY_DFS_H__
 #define __MY_DFS_H__
 #include <iostream>
+#include "AdjMatrixUndirGraph.h"
 using namespace std;
 
 template <typename T>
