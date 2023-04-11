@@ -6,21 +6,21 @@ int main()
 {
     int infity = DEFAULT_INFINITY;
     char vexs[] = {'A', 'B', 'C', 'D', 'E', 'F'};
-    int m[6][6] = {
-        {infity, 34, infity, infity, infity, 19},
-        {34, infity, infity, infity, 12, infity},
-        {infity, infity, infity, 17, infity, 25},
-        {infity, infity, 17, infity, 38, 25},
-        {infity, 12, infity, 38, infity, 26},
-        {19, infity, 25, 25, 26, infity}};
-
     // int m[6][6] = {
-    //     {infity, 34, 46, infity, infity, 19},
+    //     {infity, 34, infity, infity, infity, 19},
     //     {34, infity, infity, infity, 12, infity},
-    //     {46, infity, infity, 17, infity, 25},
+    //     {infity, infity, infity, 17, infity, 25},
     //     {infity, infity, 17, infity, 38, 25},
     //     {infity, 12, infity, 38, infity, 26},
     //     {19, infity, 25, 25, 26, infity}};
+
+    int m[6][6] = {
+        {infity, 34, 46, infity, infity, 19},
+        {34, infity, infity, infity, 12, infity},
+        {46, infity, infity, 17, infity, 25},
+        {infity, infity, 17, infity, 38, 25},
+        {infity, 12, infity, 38, infity, 26},
+        {19, infity, 25, 25, 26, infity}};
     int n = 6;
 
     AdjMatrixUndirNetwork<char, int> net(vexs, n);
