@@ -90,6 +90,7 @@ int *DFS<Elemtype, WeightType>::_DFSFindCircle(int i, int &len)
         len = 0;
         return NULL;
     }
+    return NULL;
 }
 
 template <typename Elemtype, typename WeightType>
