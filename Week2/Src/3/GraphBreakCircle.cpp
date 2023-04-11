@@ -33,9 +33,15 @@ int main()
     int *Circle = NULL;
 
     DFS<char, int> test(net);
-    int *ans = test.GetCircle();
-    for (int i = 0; i < 5; i++)
-        cout << ans[i] << " ";
+    int len;
+    int *ans = test.GetCircle(len);
+    if (len)
+    {
+        for (int i = 0; i < len; i++)
+            cout << ans[i] << " ";
+    }
+    else
+        cout << "NULL!";
     cout << endl;
     // cout << ans << endl;
     return 0;

@@ -1,5 +1,5 @@
-#ifndef __MY_DFS_H__
-#define __MY_DFS_H__
+#ifndef __DFS_FIND_CIRCLE_H__
+#define __DFS_FIND_CIRCLE_H__
 #include <iostream>
 #include "AdjMatrixUndirNetwork.h"
 using namespace std;
@@ -14,13 +14,13 @@ private:
     bool circle_exist;
     int path_top;
     int _find(int Vex);
-    int *_DFSFindCircle(int i);
+    int *_DFSFindCircle(int i, int &len);
 
 public:
     // AdjMatrixUndirNetwork<ElemType, WeightType> _graph;
     DFS(const AdjMatrixUndirNetwork<ElemType, WeightType> &graph);
     ~DFS();
-    int *GetCircle();
+    int *GetCircle(int &len);
 };
 
 template <typename Elemtype, typename WeightType>
@@ -30,11 +30,6 @@ DFS<Elemtype, WeightType>::DFS(const AdjMatrixUndirNetwork<Elemtype, WeightType>
     memset(path, 0, VexNum);
 }
 
-// template <typename Elemtype, typename WeightType>
-// void DFS<Elemtype, WeightType>::init(AdjMatrixUndirNetwork<Elemtype, WeightType> &_graph)
-// {
-// }
-
 template <typename Elemtype, typename WeightType>
 DFS<Elemtype, WeightType>::~DFS()
 {
@@ -43,23 +38,20 @@ DFS<Elemtype, WeightType>::~DFS()
 }
 
 template <typename Elemtype, typename WeightType>
-int *DFS<Elemtype, WeightType>::GetCircle()
+int *DFS<Elemtype, WeightType>::GetCircle(int &len)
 {
+    for (int i = 0; i < VexNum; i++)
+        _graph.SetTag(i, UNVISITED);
     for (int i = 0; i < VexNum; i++)
     {
         if (_graph.GetTag(i) == UNVISITED)
-        {
-            for (int j = 0; j < VexNum; j++)
-                _graph.SetTag(i, UNVISITED);
-            int *ans = _DFSFindCircle(i);
-            if (ans == NULL)
-                printf("NULL!");
-        }
+            return _DFSFindCircle(i, len);
     }
+    return NULL;
 }
 
 template <typename Elemtype, typename WeightType>
-int *DFS<Elemtype, WeightType>::_DFSFindCircle(int i)
+int *DFS<Elemtype, WeightType>::_DFSFindCircle(int i, int &len)
 {
     path[++path_top] = i;
     _graph.SetTag(i, VISITED);
@@ -72,7 +64,7 @@ int *DFS<Elemtype, WeightType>::_DFSFindCircle(int i)
         {
             if (_graph.GetTag(u) == UNVISITED)
             {
-                ans = _DFSFindCircle(u);
+                ans = _DFSFindCircle(u, len);
                 if (ans != NULL)
                     return ans;
             }
@@ -84,18 +76,20 @@ int *DFS<Elemtype, WeightType>::_DFSFindCircle(int i)
                     ans = new int[path_top - start];
                     for (int j = start; j <= path_top; j++)
                         ans[j - start] = path[j];
-                    for (int i = 0; i <= path_top; i++)
-                    {
-                        printf("%d ", ans[i]);
-                    }
-                    printf("\n");
+                    len = path_top - start + 1;
+                    // for (int i = 0; i <= path_top; i++)
+                    //     printf("%d ", ans[i]);
+                    // printf("\n");
                     return ans;
                 }
             }
         }
     }
     if (circle_exist == false)
+    {
+        len = 0;
         return NULL;
+    }
 }
 
 template <typename Elemtype, typename WeightType>
