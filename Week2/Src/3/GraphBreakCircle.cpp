@@ -29,8 +29,11 @@ int main()
         for (int v = u + 1; v < n; v++) // 生成邻接矩阵元素的值
             if (m[u][v] != infity)
                 net.InsertArc(u, v, m[u][v]);
+    cout << "Original Network:" << endl;
     net.Display(); // 显示网net
+    cout << endl;
     AdjMatrixUndirNetwork<char, int> MST = MiniSpanTreeBC(net);
+    cout << "MST of Original Network:" << endl;
     MST.Display();
     // cout << ans << endl;
     return 0;
