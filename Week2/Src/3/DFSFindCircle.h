@@ -147,6 +147,7 @@ AdjMatrixUndirNetwork<ElemType, WeightType> MiniSpanTreeBreakCircle<ElemType, We
         }
         _graph.DeleteArc(circle[MaxArcVex1], circle[MaxArcVex2]);
         // _graph.Display();
+        MaxArcVex1 = 0, MaxArcVex2 = 1;
         delete[] circle;
         _Init();
         circle = GetCircle(len);
