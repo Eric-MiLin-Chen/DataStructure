@@ -63,4 +63,56 @@ void ShortestPathDij(const AdjMatrixUndirNetwork<ElemType, WeightType> &graph, i
     }
 }
 
+template <typename ElemType, typename WeightType>
+AdjMatrixUndirNetwork<ElemType, WeightType> CreateNet(int n, int m)
+{
+    char vexs[n];
+    for (int i = 0; i < n; i++)
+        vexs[i] = 'A' + i;
+    AdjMatrixUndirNetwork<char, int> net(vexs, n);
+    for (int i = 0; i < m; i++)
+    {
+        int u, v, arc;
+        cin >> u >> v >> arc;
+        if (arc == -1)
+            arc = AdjMatrixUndirNetwork<ElemType, WeightType>().GetInfinity();
+        net.InsertArc(u, v, arc);
+    }
+    return net;
+}
+
+template <typename ElemType, typename WeightType>
+void GetShortestPathDij(const AdjMatrixUndirNetwork<ElemType, WeightType> &net, int n, const int &src, const int &dst)
+{
+    int path[n], dist[n];
+    ShortestPathDij(net, src, path, dist);
+    int temp = dst, ShortestPathLen = 0, MaxArc = 0, Arc = 0;
+    int ShortestPath[n];
+    char Vex;
+    while (temp != path[temp])
+    {
+        ShortestPath[ShortestPathLen++] = temp;
+        temp = path[temp];
+    }
+    ShortestPath[ShortestPathLen++] = temp;
+    cout << "Shortest Path: ";
+    for (int i = ShortestPathLen - 1; i >= 0; i--)
+    {
+        net.GetElem(ShortestPath[i], Vex);
+        Arc = net.GetWeight(ShortestPath[i % ShortestPathLen], ShortestPath[(i - 1 + ShortestPathLen) % ShortestPathLen]);
+        Arc = Arc == net.GetInfinity() ? -1 : Arc;
+        MaxArc = Arc > MaxArc ? Arc : MaxArc;
+        cout << Vex << " ";
+    }
+    cout << endl;
+    cout << "Max Noise: " << MaxArc << endl;
+    for (int i = 0; i < n; i++)
+        cout << path[i] << "\t";
+    cout << endl;
+    for (int i = 0; i < n; i++)
+        cout << dist[i] << "\t";
+    cout << endl;
+    return;
+}
+
 #endif
