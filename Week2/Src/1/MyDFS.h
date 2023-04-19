@@ -9,7 +9,6 @@ void _DFS_All(const AdjMatrixUndirGraph<T> &G, int u, int v, int Path[], int &k)
 {
     G.SetTag(u, VISITED);
     T temp;
-    // visited[u] = 1;
     Path[k++] = u;
     if (u == v)
     {
@@ -25,8 +24,7 @@ void _DFS_All(const AdjMatrixUndirGraph<T> &G, int u, int v, int Path[], int &k)
         if (G.GetTag(w) == UNVISITED)
             _DFS_All<T>(G, w, v, Path, k);
     }
-    G.SetTag(u, UNVISITED);
-    // visited[u] = 0; // 一条简单路径处理完，退回一个顶点继续遍历
+    G.SetTag(u, UNVISITED); // 一条简单路径处理完，退回一个顶点继续遍历
     k--;
 }
 
