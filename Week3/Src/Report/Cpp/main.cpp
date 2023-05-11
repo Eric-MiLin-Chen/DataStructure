@@ -76,22 +76,22 @@ int main()
             }
         }
     }
-    // ofstream outfile;
-    // outfile.open("./../../../Data/file.txt", ios::out);
-    // for (int f = 0; f < 3; f++)
-    // {
-    //     for (int i = 0; i < 3; i++)
-    //     {
-    //         for (int d = 0; d < 2; d++)
-    //         {
-    //             for (int j = 0; j < 9; j++)
-    //             {
-    //                 outfile << ansdata[f][i][j][d] << " ";
-    //             }
-    //             outfile << "\n";
-    //         }
-    //     }
-    // }
-    // outfile.close();
+    ofstream outfile;
+    outfile.open("./../../../Data/file.txt", ios::out);
+    for (int f = 0; f < 3; f++)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            for (int d = 0; d < 2; d++)
+            {
+                for (int j = 0; j < 9; j++)
+                {
+                    outfile << ansdata[f][i][j][d] << " ";
+                }
+                outfile << "\n";
+            }
+        }
+    }
+    outfile.close();
     return 0;
 }
