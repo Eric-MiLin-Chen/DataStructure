@@ -38,6 +38,20 @@ for j in range(2):
                 f"Three Functions{j + 1}.png"]), dpi=600)
     plt.close()
 
+j = 0
+plt.figure(figsize=(10, 6))
+for f in range(3):
+    for i in range(3):
+        plt.plot(size, data[f][i][j], style[i], color=color[f], label=FuncName[f] +
+                 " " + DataName[i])
+        plt.plot(size, worst[f][i], style[i][0]+':', color=color[f])
+plt.xlabel("Data Size")  # 横坐标名字
+plt.ylabel("Compare Counts")  # 纵坐标名字
+plt.legend(loc="best")  # 图例
+plt.savefig("/".join([src_path, "../../../Img",
+            f"Three Functions{j + 1} with worst.png"]), dpi=600)
+plt.close()
+
 for f in range(3):
     for j in range(2):
         plt.figure(figsize=(10, 6))

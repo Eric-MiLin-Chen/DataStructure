@@ -21,10 +21,6 @@ def SaveData(filename, data):
     with open("/".join([src_path, relative_path, filename + str(len(data))+".txt"]), 'w') as file:
         file.write(" ".join(map(str, data)))
 
-
-# SaveData("RandomOrderedData", RandomOrderedData(0, 10000, 1000))
-# SaveData("NormalOrderedData", NormalOrderedData(0, 10000, 1000))
-# SaveData("OrderedData", OrderedData(0, 10000, 1000))
 size = 32
 for i in range(9):
     SaveData("RandomOrderedData", RandomOrderedData(0, 10 * size, size))
