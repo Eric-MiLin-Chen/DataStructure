@@ -1,8 +1,11 @@
 #include <iostream>
+#include <fstream>
+#include <string.h>
+#include <vector>
 #include "Sort.h"
 using namespace std;
 
-int main()
+void test(Ans (*func)(int arr[], int n))
 {
     int arr[10];
     for (int i = 0; i < 10; ++i)
@@ -10,9 +13,82 @@ int main()
     for (int i = 0; i < 10; ++i)
         cout << arr[i] << " ";
     cout << endl;
-    Ans ans = quickSort(arr, 10);
+    Ans ans = func(arr, 10);
     for (int i = 0; i < 10; ++i)
         cout << arr[i] << " ";
     cout << endl;
     cout << ans.CompareCount << " " << ans.MoveCount << endl;
+}
+
+Ans TestFunc(Ans (*func)(int arr[], int n), const int arr[], int n)
+{
+    int arrcpy[n];
+    memcpy(arrcpy, arr, n * sizeof(arr[0]));
+    // for (int i = 0; i < 10; ++i)
+    //     cout << arrcpy[i] << " ";
+    // cout << endl;
+    // Ans ans = func(arrcpy, 10);
+    // for (int i = 0; i < 10; ++i)
+    //     cout << arrcpy[i] << " ";
+    // cout << endl;
+    // cout << ans.CompareCount << " " << ans.MoveCount << endl;
+    return func(arrcpy, n);
+}
+
+vector<int> LoadData(const string FileName)
+{
+    ifstream file("./../../Data/" + FileName);
+    // cout << FileName << endl;
+    vector<int> Data;
+    int tmp;
+    while (file >> tmp)
+        Data.push_back(tmp);
+    return Data;
+}
+
+int main()
+{
+    long long result[8][4][9][2] = {0}; // Function TestFileType TestFileSize CompareCount/MoveCount
+    string TestFileType[4] = {"PartiallySortedData", "RandomData", "ReversedData", "SortedData"};
+    string TestFileSize[9] = {{"32"}, {"64"}, {"128"}, {"256"}, {"512"}, {"1024"}, {"2048"}, {"4096"}, {"8192"}};
+    Ans (*func[8])(int arr[], int n) = {insertionSort, shellSort, bubbleSort, quickSort, selectionSort, heapSort, mergeSort, radixSort};
+    // vector<int> test = LoadData(TestFileType[3] + TestFileSize[0] + ".txt");
+    // for (int i = 0; i < 32; i++)
+    // {
+    //     cout << test[i] << " ";
+    // }
+    for (int f = 0; f < 8; f++)
+    {
+        for (int type = 0; type < 4; type++)
+        {
+            for (int size = 0; size < 9; size++)
+            {
+                vector<int> vData = LoadData(TestFileType[type] + TestFileSize[size] + ".txt");
+                int Data[vData.size()];
+                for (int i = 0; i < vData.size(); i++)
+                    Data[i] = vData[i];
+                Ans tmp = TestFunc(func[f], Data, vData.size());
+                result[f][type][size][0] = tmp.CompareCount;
+                result[f][type][size][1] = tmp.MoveCount;
+            }
+        }
+    }
+    for (int f = 0; f < 8; f++)
+    {
+        cout << "Function " << f + 1 << ": " << endl;
+        for (int type = 0; type < 4; type++)
+        {
+            cout << "    File Type: " << TestFileType[type] << endl;
+            for (int dtype = 0; dtype < 2; dtype++)
+            {
+                cout << "    ";
+                for (int size = 0; size < 9; size++)
+                {
+                    cout << result[f][type][size][dtype] << " ";
+                }
+                cout << endl;
+            }
+        }
+    }
+    return 0;
 }

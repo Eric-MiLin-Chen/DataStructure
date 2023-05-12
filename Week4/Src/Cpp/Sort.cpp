@@ -3,8 +3,8 @@
 // insertionSort
 Ans insertionSort(int arr[], int n)
 {
-    int _CompareCount = 0;
-    int _MoveCount = 0;
+    long long _CompareCount = 0;
+    long long _MoveCount = 0;
     for (int i = 1; i < n; ++i)
     {
         int key = arr[i];
@@ -26,8 +26,8 @@ Ans insertionSort(int arr[], int n)
 // shellSort
 Ans shellSort(int arr[], int n)
 {
-    int _CompareCount = 0;
-    int _MoveCount = 0;
+    long long _CompareCount = 0;
+    long long _MoveCount = 0;
     for (int gap = n / 2; gap > 0; gap /= 2)
     {
         for (int i = gap; i < n; ++i)
@@ -51,8 +51,8 @@ Ans shellSort(int arr[], int n)
 // bubbleSort
 Ans bubbleSort(int arr[], int n)
 {
-    int _CompareCount = 0;
-    int _MoveCount = 0;
+    long long _CompareCount = 0;
+    long long _MoveCount = 0;
     for (int i = 0; i < n - 1; ++i)
     {
         for (int j = 0; j < n - i - 1; ++j)
@@ -73,8 +73,8 @@ Ans bubbleSort(int arr[], int n)
 // quickSort
 Ans partition(int arr[], int low, int high)
 {
-    int _CompareCount = 0;
-    int _MoveCount = 0;
+    long long _CompareCount = 0;
+    long long _MoveCount = 0;
     int pivot = arr[high];
     int i = low - 1;
     for (int j = low; j < high; ++j)
@@ -98,8 +98,8 @@ Ans partition(int arr[], int low, int high)
 
 Ans _quickSort(int arr[], int low, int high)
 {
-    int _CompareCount = 0;
-    int _MoveCount = 0;
+    long long _CompareCount = 0;
+    long long _MoveCount = 0;
     if (low < high)
     {
         Ans pivot = partition(arr, low, high);
@@ -120,8 +120,8 @@ Ans quickSort(int arr[], int n)
 // selectionSort
 Ans selectionSort(int arr[], int n)
 {
-    int _CompareCount = 0;
-    int _MoveCount = 0;
+    long long _CompareCount = 0;
+    long long _MoveCount = 0;
     for (int i = 0; i < n - 1; ++i)
     {
         int minIndex = i;
@@ -144,8 +144,8 @@ Ans selectionSort(int arr[], int n)
 // heapSort
 Ans heapify(int arr[], int n, int i)
 {
-    int _CompareCount = 0;
-    int _MoveCount = 0;
+    long long _CompareCount = 0;
+    long long _MoveCount = 0;
     int largest = i;
     int left = 2 * i + 1;
     int right = 2 * i + 2;
@@ -174,8 +174,8 @@ Ans heapify(int arr[], int n, int i)
 
 Ans heapSort(int arr[], int n)
 {
-    int _CompareCount = 0;
-    int _MoveCount = 0;
+    long long _CompareCount = 0;
+    long long _MoveCount = 0;
     for (int i = n / 2 - 1; i >= 0; --i)
     {
         Ans ans = heapify(arr, n, i);
@@ -198,8 +198,8 @@ Ans heapSort(int arr[], int n)
 // mergeSort
 Ans merge(int arr[], int left, int mid, int right)
 {
-    int _CompareCount = 0;
-    int _MoveCount = 0;
+    long long _CompareCount = 0;
+    long long _MoveCount = 0;
     int n1 = mid - left + 1;
     int n2 = right - mid;
     int L[n1], R[n2];
@@ -251,8 +251,8 @@ Ans merge(int arr[], int left, int mid, int right)
 
 Ans _mergeSort(int arr[], int left, int right)
 {
-    int _CompareCount = 0;
-    int _MoveCount = 0;
+    long long _CompareCount = 0;
+    long long _MoveCount = 0;
     if (left < right)
     {
         int mid = left + (right - left) / 2;
@@ -273,8 +273,8 @@ Ans mergeSort(int arr[], int n)
 // radixSort
 Ans getMax(int arr[], int n)
 {
-    int _CompareCount = 0;
-    int _MoveCount = 0;
+    long long _CompareCount = 0;
+    long long _MoveCount = 0;
     int max = arr[0];
     for (int i = 1; i < n; ++i)
     {
@@ -290,8 +290,8 @@ Ans getMax(int arr[], int n)
 
 Ans countSort(int arr[], int n, int exp)
 {
-    int _CompareCount = 0;
-    int _MoveCount = 0;
+    long long _CompareCount = 0;
+    long long _MoveCount = 0;
     int output[n];
     int count[10] = {0};
     for (int i = 0; i < n; ++i)
@@ -318,8 +318,8 @@ Ans countSort(int arr[], int n, int exp)
 
 Ans radixSort(int arr[], int n)
 {
-    int _CompareCount = 0;
-    int _MoveCount = 0;
+    long long _CompareCount = 0;
+    long long _MoveCount = 0;
     Ans ans_getMax = getMax(arr, n);
     int max = ans_getMax.RedundancyData;
     for (int exp = 1; max / exp > 0; exp *= 10)
