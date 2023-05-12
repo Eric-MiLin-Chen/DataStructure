@@ -1,52 +1,73 @@
+#include "Sort.h"
+
 // insertionSort
-void insertionSort(int arr[], int n)
+Ans insertionSort(int arr[], int n)
 {
+    int _CompareCount = 0;
+    int _MoveCount = 0;
     for (int i = 1; i < n; ++i)
     {
         int key = arr[i];
+        _MoveCount++;
         int j = i - 1;
         while (j >= 0 && arr[j] > key)
         {
+            _CompareCount++;
             arr[j + 1] = arr[j];
+            _MoveCount++;
             j--;
         }
         arr[j + 1] = key;
+        _MoveCount++;
     }
+    return Ans(_CompareCount, _MoveCount);
 }
 
 // shellSort
-void shellSort(int arr[], int n)
+Ans shellSort(int arr[], int n)
 {
+    int _CompareCount = 0;
+    int _MoveCount = 0;
     for (int gap = n / 2; gap > 0; gap /= 2)
     {
         for (int i = gap; i < n; ++i)
         {
             int temp = arr[i];
+            _MoveCount++;
             int j;
             for (j = i; j >= gap && arr[j - gap] > temp; j -= gap)
             {
+                _CompareCount++;
                 arr[j] = arr[j - gap];
+                _MoveCount++;
             }
             arr[j] = temp;
+            _MoveCount++;
         }
     }
+    return Ans(_CompareCount, _MoveCount);
 }
 
 // bubbleSort
-void bubbleSort(int arr[], int n)
+Ans bubbleSort(int arr[], int n)
 {
+    int _CompareCount = 0;
+    int _MoveCount = 0;
     for (int i = 0; i < n - 1; ++i)
     {
         for (int j = 0; j < n - i - 1; ++j)
         {
             if (arr[j] > arr[j + 1])
             {
+                _CompareCount++;
                 int temp = arr[j];
                 arr[j] = arr[j + 1];
                 arr[j + 1] = temp;
+                _MoveCount += 3;
             }
         }
     }
+    return Ans(_CompareCount, _MoveCount);
 }
 
 // quickSort
@@ -70,7 +91,7 @@ int partition(int arr[], int low, int high)
     return i + 1;
 }
 
-void quickSort(int arr[], int low, int high)
+Ans quickSort(int arr[], int low, int high)
 {
     if (low < high)
     {
@@ -81,8 +102,10 @@ void quickSort(int arr[], int low, int high)
 }
 
 // selectionSort
-void selectionSort(int arr[], int n)
+Ans selectionSort(int arr[], int n)
 {
+    int _CompareCount = 0;
+    int _MoveCount = 0;
     for (int i = 0; i < n - 1; ++i)
     {
         int minIndex = i;
@@ -90,13 +113,16 @@ void selectionSort(int arr[], int n)
         {
             if (arr[j] < arr[minIndex])
             {
+                _CompareCount++;
                 minIndex = j;
             }
         }
         int temp = arr[i];
         arr[i] = arr[minIndex];
         arr[minIndex] = temp;
+        _MoveCount += 3;
     }
+    return Ans(_CompareCount, _MoveCount);
 }
 
 // heapSort
@@ -122,7 +148,7 @@ void heapify(int arr[], int n, int i)
     }
 }
 
-void heapSort(int arr[], int n)
+Ans heapSort(int arr[], int n)
 {
     for (int i = n / 2 - 1; i >= 0; --i)
     {
@@ -182,7 +208,7 @@ void merge(int arr[], int left, int mid, int right)
     }
 }
 
-void mergeSort(int arr[], int left, int right)
+Ans mergeSort(int arr[], int left, int right)
 {
     if (left < right)
     {
@@ -230,11 +256,10 @@ void countSort(int arr[], int n, int exp)
     }
 }
 
-void radixSort(int arr[], int n)
+Ans radixSort(int arr[], int n)
 {
     int max = getMax(arr, n);
-    for (int exp = 1;
-         max / exp > 0; exp *= 10)
+    for (int exp = 1; max / exp > 0; exp *= 10)
     {
         countSort(arr, n, exp);
     }
