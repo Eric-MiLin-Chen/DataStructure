@@ -10,8 +10,9 @@ int main()
     for (int i = 0; i < 10; ++i)
         cout << arr[i] << " ";
     cout << endl;
-    insertionSort(arr, 10);
+    Ans ans = quickSort(arr, 10);
     for (int i = 0; i < 10; ++i)
         cout << arr[i] << " ";
     cout << endl;
+    cout << ans.CompareCount << " " << ans.MoveCount << endl;
 }
