@@ -2,82 +2,111 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 
-
 src_path = sys.path[0]
-relative_path = "../../../Data"
+relative_path = "../../Data"
 data = ""
-worst = ""
-with open("/".join([src_path, relative_path, "file.txt"]), 'r') as file:
+with open("/".join([src_path, relative_path, "File.txt"]), "r") as file:
     data = file.read()
-with open("/".join([src_path, relative_path, "worst.txt"]), 'r') as file:
-    worst = file.read()
 
 data = np.array(list(map(float, data.split())))
-data = data.reshape(3, 3, 2, 9)
+data = data.reshape(8, 4, 2, 9)
+# Function TestFileType CompareCount/MoveCount TestFileSize
 print(data)
-worst = np.array(list(map(int, worst.split())))
-worst = worst.reshape(3, 3, 9)
-print(worst)
 
-size = [pow(2, i + 5) for i in range(9)]
-DataName = ["OrderedData", "NormalOrderedData", "RandomOrderedData"]
-FuncName = ["BinarySearch", "FibSearch", "InterpolationSearch"]
-color = ["#e47e72", "#87c982", "#27a0e7"]
-style = ['o-', 's-', 'D-']
+DataSize = [pow(2, i + 5) for i in range(9)]
+DataType = ["PartiallySortedData", "RandomData", "ReversedData", "SortedData"]
+FuncName = [
+    "insertionSort",
+    "shellSort",
+    "bubbleSort",
+    "quickSort",
+    "selectionSort",
+    "heapSort",
+    "mergeSort",
+    "radixSort",
+]
+DataName = ["CompareNum", "MoveNum"]
+color = ["#e47e72", "#87c982", "#27a0e7", "#828282"]
+bar_width = 0.2
+Summery = [[], []]
+x = np.arange(9)
 
-for j in range(2):
-    plt.figure(figsize=(10, 6))
-    for f in range(3):
-        for i in range(3):
-            plt.plot(size, data[f][i][j], style[i], color=color[f], label=FuncName[f] +
-                     " " + DataName[i])
-    plt.xlabel("Data Size")  # 横坐标名字
-    plt.ylabel("Compare Counts")  # 纵坐标名字
-    plt.legend(loc="best")  # 图例
-    plt.savefig("/".join([src_path, "../../../Img",
-                f"Three Functions{j + 1}.png"]), dpi=600)
+
+# 柱状
+def SaveImg():
+    for funcname in range(len(FuncName)):
+        for dataname in range(len(DataName)):
+            plt.figure(figsize=(10, 6))
+            for datatype in range(len(DataType)):
+                bar = plt.bar(
+                    x + datatype * bar_width,
+                    data[funcname][datatype][dataname],
+                    bar_width,
+                    align="center",
+                    color=color[datatype],
+                    label=DataType[datatype],
+                    alpha=0.5,
+                )
+                plt.bar_label(bar, rotation=90, fontsize=8)
+
+            temp = [data[funcname][i][dataname] for i in range(len(DataType))]
+            temp = [
+                sum([temp[i][j] / 4 for i in range(len(DataType))])
+                for j in range(len(DataSize))
+            ]
+            Summery[dataname].append(temp)
+            plt.plot(
+                x + 1.5 * bar_width,
+                temp,
+                "o-",
+                color="r",
+                label=f"Average {DataType[datatype]}",
+                alpha=0.5,
+            )
+
+            plt.title(f"{FuncName[funcname]} {DataName[dataname]}", fontsize=18)
+            plt.xticks(x + 1.5 * bar_width, DataSize, fontsize=12)
+            plt.xlabel("Data Size", fontsize=14)
+            plt.ylabel(DataName[dataname], fontsize=14)
+            plt.legend(loc="best")
+            plt.savefig(
+                "/".join(
+                    [
+                        src_path,
+                        "../../Img",
+                        f"{FuncName[funcname]} {DataName[dataname]}.png",
+                    ]
+                ),
+                dpi=150,
+            )
+            plt.close()
+
+
+SaveImg()
+
+for dataname in range(len(DataName)):
+    for funcname in range(len(FuncName)):
+        plt.plot(
+            DataSize,
+            Summery[dataname][funcname],
+            "-",
+            # color="r",
+            label=f"Average {FuncName[funcname]}",
+            alpha=0.3,
+        )
+
+        plt.title(f"Summery {DataName[dataname]}", fontsize=18)
+        plt.xlabel("Data Size", fontsize=14)
+        plt.ylabel(DataName[dataname], fontsize=14)
+        plt.legend(loc="best")
+    plt.savefig(
+        "/".join(
+            [
+                src_path,
+                "../../Img",
+                f"Summery {DataName[dataname]}.png",
+            ]
+        ),
+        dpi=150,
+    )
     plt.close()
-
-j = 0
-plt.figure(figsize=(10, 6))
-for f in range(3):
-    for i in range(3):
-        plt.plot(size, data[f][i][j], style[i], color=color[f], label=FuncName[f] +
-                 " " + DataName[i])
-        plt.plot(size, worst[f][i], style[i][0]+':', color=color[f])
-plt.xlabel("Data Size")  # 横坐标名字
-plt.ylabel("Compare Counts")  # 纵坐标名字
-plt.legend(loc="best")  # 图例
-plt.savefig("/".join([src_path, "../../../Img",
-            f"Three Functions{j + 1} with worst.png"]), dpi=600)
-plt.close()
-
-for f in range(3):
-    for j in range(2):
-        plt.figure(figsize=(10, 6))
-        for i in range(3):
-            plt.plot(size, data[f][i][j], style[i], color=color[f], label=FuncName[f] +
-                     " " + DataName[i])
-            if j == 0:
-                plt.plot(size, worst[f][i], style[i][0]+':', color=color[f])
-        plt.xlabel("Data Size")  # 横坐标名字
-        plt.ylabel("Compare Counts")  # 纵坐标名字
-        plt.legend(loc="best")  # 图例
-        plt.savefig("/".join([src_path, "../../../Img",
-                    f"Different Data of {FuncName[f]}{j + 1}.png"]), dpi=600)
-        plt.close()
-
-for i in range(3):
-    for j in range(2):
-        plt.figure(figsize=(10, 6))
-        for f in range(3):
-            plt.plot(size, data[f][i][j], style[i], color=color[f], label=FuncName[f] +
-                     " " + DataName[i])
-            if j == 0:
-                plt.plot(size, worst[f][i], style[i][0]+':', color=color[f])
-        plt.xlabel("Data Size")  # 横坐标名字
-        plt.ylabel("Compare Counts")  # 纵坐标名字
-        plt.legend(loc="best")  # 图例
-        plt.savefig("/".join([src_path, "../../../Img",
-                    f"Different Function of {DataName[i]}{j + 1}.png"]), dpi=600)
-        plt.close()
